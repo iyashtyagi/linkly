@@ -15,6 +15,13 @@
       "when": 1745760741148,
       "tag": "0001_amazing_king_cobra",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1745787029722,
+      "tag": "0002_fair_monster_badoon",
+      "breakpoints": true
     }
   ]
 }

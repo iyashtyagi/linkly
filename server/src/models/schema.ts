@@ -6,7 +6,7 @@ export const usersTable = pgTable('usersTable', {
     username: varchar('username').unique().notNull(),
     firstName: varchar('first_name', { length: 30 }).notNull(),
     lastName: varchar('last_name', { length: 30 }).notNull(),
-    password: varchar('password', { length: 30 }).notNull(),
+    password: varchar('password', { length: 100 }).notNull(),
 });
 
 export const linksTable = pgTable('linksTable', {

@@ -1,0 +1,1 @@
+ALTER TABLE "usersTable" ALTER COLUMN "password" SET DATA TYPE varchar(100);
