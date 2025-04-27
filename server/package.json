@@ -3,7 +3,10 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-        "dev": "tsx watch --clear-screen=false src/app.ts"
+        "dev": "tsx watch --clear-screen=false src/app.ts",
+        "db:generate": "drizzle-kit generate",
+        "db:migrate": "drizzle-kit migrate",
+        "db:studio": "drizzle-kit studio"
     },
     "keywords": [],
     "author": "",
