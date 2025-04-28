@@ -29,3 +29,29 @@ export const signin = async ({ username, password } : authValidation.SigninInput
 
     return token;
 };
+
+export const signup = async ({ username, password, firstName, lastName } : authValidation.SignupInput) => {
+    username = username.trim().toLowerCase();
+    firstName = firstName.trim();
+    lastName = lastName.trim();
+
+    const existingUsers = await db.select({ username : usersTable.username }).from(usersTable).where(eq(usersTable.username, username)).limit(1);
+
+    if(existingUsers.length){
+        throw new Error("User already exist");
+    }
+
+    const hashedPassword = await bcryptUtil.generateHashedPassword(password);
+
+    const newUser = await db.insert(usersTable).values({
+        username,
+        password : hashedPassword,
+        firstName,
+        lastName
+    }).returning({
+        userId : usersTable.id,
+        username : usersTable.username
+    });
+
+    return newUser[0];
+};

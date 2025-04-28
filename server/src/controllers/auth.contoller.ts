@@ -19,3 +19,22 @@ export const handleSignin = async (req : Request, res : Response) => {
         });
     }
 };
+
+export const handleSignup = async (req : Request, res : Response) => {
+    const { username, password, firstName, lastName } : authValidation.SignupInput = req.body;
+    
+    try{
+        const user = await authService.signup({ username, password, firstName, lastName });
+        res.status(201).json({
+            success : true,
+            message : "Signup successful",
+            user
+        })
+    }
+    catch(error : any){
+        res.status(400).json({
+            success : false,
+            message : error.message || "Signup failed"
+        })
+    }
+};

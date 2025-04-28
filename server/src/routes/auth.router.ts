@@ -7,10 +7,6 @@ const authRouter = Router();
 
 authRouter.post("/signin", validate(authValidation.signin), authController.handleSignin);
 
-authRouter.post("/signup", async (req, res) => {
-    res.json({
-        message : "SignUp"
-    });
-});
+authRouter.post("/signup", validate(authValidation.signup), authController.handleSignup);
 
 export default authRouter;
