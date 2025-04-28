@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { authValidation } from "../validations";
-import { authService } from "../services/";
+import { authService } from "../services";
 
 export const handleSignin = async (req : Request, res : Response, next : NextFunction) => {
     const { username, password } : authValidation.SigninInput = req.body;
