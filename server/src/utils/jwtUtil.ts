@@ -10,7 +10,7 @@ export const generateToken = ({ data, expiresIn } : { data : JwtData, expiresIn 
 
 export const verifyToken = ( token : string ) => {
     try {
-        const data = jwt.verify(token, JWT_SECRET);
+        const data = jwt.verify(token, JWT_SECRET) as JwtData;
         return {
             valid : true,
             data

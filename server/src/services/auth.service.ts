@@ -3,19 +3,20 @@ import { db } from "../config/db";
 import { usersTable } from "../models/schema";
 import { authValidation } from "../validations";
 import { jwtUtil, bcryptUtil } from "../utils";
+import { BadRequestError, NotFoundError } from "../errors";
 
 export const signin = async ({ username, password } : authValidation.SigninInput) => {
     username = username.trim().toLowerCase();
     const user = await db.select().from(usersTable).where(eq(usersTable.username, username));
 
-    if(!user){
-        throw new Error("User not found");
+    if(!user[0]){
+        throw new NotFoundError("User not found");
     }
 
     const isPasswordValid = await bcryptUtil.verifyHashedPassword(password, user[0].password);
 
     if(!isPasswordValid){
-        throw new Error("Invalid username/password");
+        throw new BadRequestError("Invalid username/password");
     }
 
     const payload = {
@@ -38,7 +39,7 @@ export const signup = async ({ username, password, firstName, lastName } : authV
     const existingUsers = await db.select({ username : usersTable.username }).from(usersTable).where(eq(usersTable.username, username)).limit(1);
 
     if(existingUsers.length){
-        throw new Error("User already exist");
+        throw new BadRequestError("User already exist");
     }
 
     const hashedPassword = await bcryptUtil.generateHashedPassword(password);
