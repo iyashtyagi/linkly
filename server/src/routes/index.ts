@@ -1,6 +1,7 @@
 import { Router } from "express";
 import authRouter from "./auth.router";
 import urlRouter from "./url.router";
+import redirectRouter from "./redirect.router";
 import { isAuthenticated } from "../middlewares";
 
 const router = Router();
@@ -17,5 +18,7 @@ apiRoutes.forEach(({ path, route, isProtected }) => {
         router.use(`/api${path}`, route);
     }
 });
+
+router.use("/", redirectRouter);
 
 export default router;

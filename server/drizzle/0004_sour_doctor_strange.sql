@@ -1,0 +1,1 @@
+ALTER TABLE "clicksTable" ADD COLUMN "device_vendor" varchar(50);

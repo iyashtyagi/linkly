@@ -1,0 +1,1 @@
+export const IP_INFO_TOKEN = process.env.IP_INFO_TOKEN;

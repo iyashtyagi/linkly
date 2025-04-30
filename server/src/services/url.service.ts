@@ -3,6 +3,7 @@ import { db } from "../config/db"
 import { linksTable } from "../models/schema"
 import { urlHelper } from "../helpers";
 import { randomIdGen } from "../utils";
+import { date } from "drizzle-orm/mysql-core";
 
 export const getAllUrlByUser = async (userId : string) => {
     const urlArray = await db.select({
@@ -34,4 +35,20 @@ export const createNewSlug = async (url : string, userId : string) => {
     });
 
     return slugData;
+}
+
+export const isValidSlug = async (slug : string) => {
+    const slugFromDB = await db.select({
+        url : linksTable.url,
+        linkId : linksTable.id
+    }).from(linksTable).where(eq(linksTable.slug, slug)).limit(1);
+
+    if(slugFromDB[0]){
+        return {
+            data : slugFromDB[0]
+        };
+    }
+    return {
+        data : null
+    };
 }

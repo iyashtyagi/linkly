@@ -11,6 +11,4 @@ urlRouter.get("/", urlController.getAllUrls);
 // create new slug
 urlRouter.post("/create", validate(urlSchema), urlController.createNewSlug);
 
-
-
 export default urlRouter;
