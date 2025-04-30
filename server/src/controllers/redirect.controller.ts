@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { trackingService, urlService } from "../services";
 import { saveClick } from "../services/tracking.service";
+import { NotFoundError } from "../errors";
 
 
 export const redirect = async (req : Request, res : Response, next : NextFunction) => {
@@ -9,9 +10,8 @@ export const redirect = async (req : Request, res : Response, next : NextFunctio
         const slug = req.params.slug.toLowerCase();
         const { data } = await urlService.isValidSlug(slug);
         if(!data?.url){
-            return res.status(404).json({
-                message : "Link doesn't exist"
-            });
+            next(new NotFoundError("Link doesn't exist"));
+            return;
         }
         
         res.status(302).redirect(data.url);
