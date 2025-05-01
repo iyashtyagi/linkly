@@ -6,13 +6,16 @@
         "dev": "tsx watch --clear-screen=false src/app.ts",
         "db:generate": "drizzle-kit generate",
         "db:migrate": "drizzle-kit migrate",
-        "db:studio": "drizzle-kit studio"
+        "db:studio": "drizzle-kit studio",
+        "build": "tsc -b",
+        "server": "node ./dist/src/app.js"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "type": "commonjs",
     "devDependencies": {
+        "typescript": "^5.8.3",
         "@types/express": "^5.0.1",
         "@types/jsonwebtoken": "^9.0.9",
         "@types/pg": "^8.11.14",
