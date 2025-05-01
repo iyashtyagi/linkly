@@ -1,9 +1,9 @@
-import { eq } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
 import { db } from "../config/db"
 import { linksTable } from "../models/schema"
 import { urlHelper } from "../helpers";
 import { randomIdGen } from "../utils";
-import { date } from "drizzle-orm/mysql-core";
+import { NotFoundError } from "../errors";
 
 export const getAllUrlByUser = async (userId : string) => {
     const urlArray = await db.select({
@@ -52,3 +52,16 @@ export const isValidSlug = async (slug : string) => {
         data : null
     };
 }
+
+export const getUrlDetailsById = async ( urlId : string, userId : string ) => {
+    const data = await db.select()
+        .from(linksTable)
+        .where(and(eq(linksTable.id, urlId), eq(linksTable.userId, userId)))
+        .limit(1);
+    if(!data.length){
+        throw new NotFoundError("No URL found for the given ID.");
+    }
+    return {
+        urlData : data[0]
+    };
+};
