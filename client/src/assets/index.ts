@@ -1,0 +1,1 @@
+export { default as linklyLogo } from "./logo.svg";

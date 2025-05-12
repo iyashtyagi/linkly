@@ -1,9 +1,12 @@
-export default function App() {
-  return (
-    <>
-      <div>
-        <h1 className="text-2xl text-center">Url Shortener</h1>
-      </div>
-    </>
-  );
-}
+import { RouterProvider } from "react-router";
+import router from "./router";
+
+function App() {
+    return (
+        <div className="font-mono">
+            <RouterProvider router={router} />
+        </div>
+    );
+};
+
+export default App;
