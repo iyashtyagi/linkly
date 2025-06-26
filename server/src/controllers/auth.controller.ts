@@ -5,10 +5,11 @@ import { authService } from "../services";
 export const handleSignin = async (req : Request, res : Response, next : NextFunction) => {
     const { username, password } : authValidation.SigninInput = req.body;
     try {
-        const token = await authService.signin({ username, password });
+        const { token, user } = await authService.signin({ username, password });
         res.status(200).json({
             success : true,
             message : "Signin successful",
+            user,
             token
         });
     }

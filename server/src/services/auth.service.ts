@@ -7,7 +7,7 @@ import { BadRequestError, NotFoundError } from "../errors";
 
 export const signin = async ({ username, password } : authValidation.SigninInput) => {
     username = username.trim().toLowerCase();
-    const user = await db.select().from(usersTable).where(eq(usersTable.username, username));
+    const user = await db.select().from(usersTable).where(eq(usersTable.username, username)).limit(1);
 
     if(!user[0]){
         throw new NotFoundError("User not found");
@@ -25,10 +25,16 @@ export const signin = async ({ username, password } : authValidation.SigninInput
         },
         expiresIn : '1d'
     };
-
+    
+    // Remove password from user object before generating token
+    const { password: _, ...safeUser } = user[0];
+    
     const token = jwtUtil.generateToken(payload);
 
-    return token;
+    return {
+        user : safeUser,
+        token
+    };
 };
 
 export const signup = async ({ username, password, firstName, lastName } : authValidation.SignupInput) => {
