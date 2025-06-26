@@ -1,11 +1,13 @@
 import axios, { AxiosError } from "axios";
-import type { AppDispatch } from "../store/store";
+import type { AppDispatch } from "@/store/store";
 import {
-  login,
-  logout,
-} from "../store/slice";
-import { backendUrl } from "../utils";
-import type { User } from "../types/linkly-type";
+    addUrl,
+    login,
+    logout,
+    setLoading,
+} from "@/store/slice";
+import { backendUrl } from "@/utils";
+import type { User } from "@/types/linkly-type";
 import { toast } from "sonner";
 
 interface ApiErrorResponse {
@@ -31,7 +33,7 @@ api.interceptors.request.use((config) => {
 
 export const handleSignup = async (
     data: { firstName: string; lastName: string; username: string; password: string }
-    ): Promise<void> => {
+): Promise<void> => {
     try {
         await api.post(`/auth/signup`, data);
     } catch (error) {
@@ -43,14 +45,14 @@ export const handleSignup = async (
 export const handleLogin = async (
     dispatch: AppDispatch,
     data: { username: string; password: string }
-    ): Promise<User | void> => {
+): Promise<User | void> => {
     try {
         const response = await api.post("/auth/signin", data);
         dispatch(
-        login({
-            user: response.data.user,
-            token: response.data.token,
-        })
+            login({
+                user: response.data.user,
+                token: response.data.token,
+            })
         );
         return response.data.user;
     } catch (error) {
@@ -70,3 +72,17 @@ export const handleLogout = () => {
     };
 };
 
+export const handleShortenUrl = (data: { url: string }) => {
+    return async (dispatch: AppDispatch) => {
+        dispatch(setLoading(true));
+        try {
+            const response = await api.post(`/url/create`, data);
+            dispatch(addUrl(response.data.data));
+        } catch (error) {
+            const err = error as AxiosError<ApiErrorResponse>;
+            throw new Error(err.response?.data?.message || "Failed to shorten URL");
+        } finally {
+            dispatch(setLoading(false));
+        }
+    };
+};

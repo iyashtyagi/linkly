@@ -2,11 +2,11 @@ import { motion } from "framer-motion";
 import { Button, Avatar, AvatarFallback, AvatarImage, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../store/store";
+import type { AppDispatch, RootState } from "@/store/store";
 import { toast } from "sonner";
 import { useCallback } from "react";
-import type { User } from "../types/linkly-type";
-import { handleLogout } from "../handlers";
+import type { User } from "@/types/linkly-type";
+import { handleLogout } from "@/handlers";
 import { linklyLogo } from "@/assets";
 
 const Header = () => {
@@ -41,12 +41,11 @@ const Header = () => {
         return initials;
     }, [user, dispatch, navigate]);
 
-    const isAuthPage =
-        location.pathname === "/login" || location.pathname === "/signup";
+    const isAuthPage = location.pathname === "/login" || location.pathname === "/signup";
 
     return (
         <motion.header
-            className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b"
+            className="fixed top-0 left-0 right-0 z-50 bg-background/30 backdrop-blur-sm border-b"
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.5 }}
@@ -89,7 +88,7 @@ const Header = () => {
                     ) : (
                         !isAuthPage && (
                             <Button variant="default" size="sm" asChild>
-                                <Link to="/login">Log in / Sign up</Link>
+                                <Link to="/login" className="py-5">Log in / Sign up</Link>
                             </Button>
                         )
                     )}

@@ -12,3 +12,5 @@ export function getDecodedUser(token: string | null): User | null {
     }
 };
 export const backendUrl = import.meta.env.VITE_SERVER_URL;
+
+export * from "./content";

@@ -1,6 +1,12 @@
+import { Features, Hero, Testimonials } from "@/components";
+
 const Landing = () => {
     return (
-        <div>Landing</div>
+        <div>
+            <Hero />
+            <Features />
+            <Testimonials />
+        </div>
     );
 };
 
