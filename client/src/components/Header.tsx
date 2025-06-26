@@ -1,43 +1,102 @@
+import { motion } from "framer-motion";
+import { Button, Avatar, AvatarFallback, AvatarImage, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui";
+import { Link, useLocation, useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../store/store";
+import { toast } from "sonner";
+import { useCallback } from "react";
+import type { User } from "../types/linkly-type";
+import { handleLogout } from "../handlers";
 import { linklyLogo } from "@/assets";
-import { Button } from "./ui/button";
-import { Link, useNavigate } from "react-router";
 
 const Header = () => {
-
+    const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+    const user = useSelector(
+        (state: RootState) => state.auth.user
+    ) as User | null;
     const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+    const location = useLocation();
+
+    const handleLogoutFnc = async (): Promise<void> => {
+        try {
+            await dispatch(handleLogout());
+            navigate("/");
+            toast.success('Logged out successfully')
+        } catch (error) {
+            const errorMessage =
+                error instanceof Error ? error.message : "Logout failed";
+            toast.error(errorMessage);
+        }
+    };
+
+    const getInitials = useCallback(() => {
+        if (!user || !user.firstName || !user.lastName) {
+            dispatch(handleLogout());
+            toast.error("User information is incomplete. Please log in again.");
+            navigate("/login");
+            return "";
+        }
+        const initials = user.firstName.charAt(0).toUpperCase() + user.lastName.charAt(0).toUpperCase();
+        return initials;
+    }, [user, dispatch, navigate]);
+
+    const isAuthPage =
+        location.pathname === "/login" || location.pathname === "/signup";
 
     return (
-        <nav className="px-4 fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
-            <div className="flex items-center justify-between py-4">
+        <motion.header
+            className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b"
+            initial={{ y: -100 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.5 }}
+        >
+            <div className="container mx-auto px-4 lg:px-28 h-16 flex items-center justify-between">
                 <Link to="/" className="flex items-center space-x-2">
                     <img src={linklyLogo} alt="Linkly Logo" className="h-6 w-auto" />
                     <span className="text-xl font-bold tracking-tighter">Linkly</span>
                 </Link>
-
-                <div>
-                    <Button onClick={() => navigate("/auth")}>Login</Button>                    
-                </div>
+                <nav className="flex items-center space-x-6">
+                    {isLoggedIn ? (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Avatar className="cursor-pointer">
+                                    <AvatarImage alt={user?.username || user?.username || "User"} />
+                                    <AvatarFallback>{getInitials()}</AvatarFallback>
+                                </Avatar>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem asChild>
+                                    <Link to="/dashboard" className="w-full cursor-pointer">
+                                        Dashboard
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link to="/contact" className="w-full cursor-pointer">
+                                        Contact
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link to="/report" className="w-full cursor-pointer">
+                                        Report
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={handleLogoutFnc} className="cursor-pointer">
+                                    Logout
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    ) : (
+                        !isAuthPage && (
+                            <Button variant="default" size="sm" asChild>
+                                <Link to="/login">Log in / Sign up</Link>
+                            </Button>
+                        )
+                    )}
+                </nav>
             </div>
-        </nav>
+        </motion.header>
     );
-};
-
-
-// <header>
-//      <div class="container mx-auto px-4 lg:px-28 h-16 flex items-center justify-between">
-//      <a class="flex items-center space-x-2" href="/" data-discover="true">
-//          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mountain h-5 w-5">
-//              <path d="m8 3 4 8 5-5 5 15H2L8 3z"></path>
-//          </svg>
-//          <span class="text-xl font-bold tracking-tighter">zipp2</span>
-//      </a>
-//          <nav class="flex items-center space-x-6">
-//              <a class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3" href="/login" data-discover="true">
-//          Log in / Sign up
-//      </a>
-//          </nav>
-//      </div>
-// </header>
-
+}
 
 export default Header;
