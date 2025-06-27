@@ -3,7 +3,7 @@ import { features } from "@/utils";
 
 const Features = () => {
     return (
-        <section className="py-24 px-28">
+        <section className="py-24 px-8 lg:px-28">
             <div className="container mx-auto max-w-[1300px]">
                 <motion.div
                     className="text-center mb-16"

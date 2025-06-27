@@ -110,6 +110,7 @@ const SignupPage = () => {
                                         id="username"
                                         type="text"
                                         placeholder="Enter your username"
+                                        autoComplete="username"
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
                                         required
@@ -120,6 +121,7 @@ const SignupPage = () => {
                                     <Input
                                         id="password"
                                         type="password"
+                                        autoComplete="new-password"
                                         placeholder="Enter your password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}

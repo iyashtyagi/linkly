@@ -82,6 +82,7 @@ const LoginPage = () => {
                                     <Input
                                         id="username"
                                         type="text"
+                                        autoComplete="username"
                                         placeholder="Enter your username"
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
@@ -93,6 +94,7 @@ const LoginPage = () => {
                                     <Input
                                         id="password"
                                         type="password"
+                                        autoComplete="current-password"
                                         placeholder="Enter your password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}

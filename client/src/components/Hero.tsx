@@ -58,7 +58,7 @@ const Hero = () => {
                     backgroundSize: "50% 50%",
                 }}
             />
-            <div className="container relative mx-auto px-4">
+            <div className="container relative mx-auto px-8">
                 <motion.div
                     className="max-w-4xl mx-auto text-center"
                     initial={{ opacity: 0, y: 20 }}

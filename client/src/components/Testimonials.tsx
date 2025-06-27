@@ -4,7 +4,7 @@ import { testimonials } from '@/utils';
 
 const Testimonials = () => {
     return (
-        <section className="py-24 px-28 bg-muted">
+        <section className="py-24 px-8 lg:px-28 bg-muted">
             <div className="container mx-auto max-w-[1300px]">
                 <motion.div
                     className="text-center mb-16"

@@ -50,7 +50,7 @@ const Header = () => {
             animate={{ y: 0 }}
             transition={{ duration: 0.5 }}
         >
-            <div className="container mx-auto px-4 lg:px-28 h-16 flex items-center justify-between">
+            <div className="container mx-auto px-8 lg:px-28 h-16 flex items-center justify-between">
                 <Link to="/" className="flex items-center space-x-2">
                     <img src={linklyLogo} alt="Linkly Logo" className="h-6 w-auto" />
                     <span className="text-xl font-bold tracking-tighter">Linkly</span>
