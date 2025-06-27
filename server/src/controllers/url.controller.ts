@@ -33,3 +33,25 @@ export const createNewSlug = async (req : Request, res : Response, next : NextFu
         next(err);
     }
 }
+
+export const deleteUrl = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const userId = req.userId;
+        const urlId : string = req.params.urlId;
+        
+        if(!userId){
+            return next(new UnauthorizedError("Please log in or sign up"));
+        }
+    
+        const result = await urlService.deleteUrlById(urlId, userId);
+        if(result){
+            res.status(200).json({
+                success: result
+            });
+        } else {
+            next(new Error());
+        }
+    } catch (err: any) {
+        next(err);
+    }
+}

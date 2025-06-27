@@ -1,6 +1,6 @@
 import { and, eq } from "drizzle-orm"
 import { db } from "../config/db"
-import { linksTable } from "../models/schema"
+import { linksTable, usersTable } from "../models/schema"
 import { urlHelper } from "../helpers";
 import { randomIdGen } from "../utils";
 import { NotFoundError } from "../errors";
@@ -65,3 +65,13 @@ export const getUrlDetailsById = async ( urlId : string, userId : string ) => {
         urlData : data[0]
     };
 };
+
+export const deleteUrlById = async ( urlId: string, userId: string ) => {
+    const res = await db.delete(linksTable)
+        .where(and(eq(linksTable.id, urlId), eq(linksTable.userId, userId)))
+        .returning();
+    if(!res.length){
+        throw new NotFoundError("No URL found with this ID for the current user.");
+    }
+    return true;
+}
