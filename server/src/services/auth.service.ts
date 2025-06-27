@@ -18,16 +18,17 @@ export const signin = async ({ username, password } : authValidation.SigninInput
     if(!isPasswordValid){
         throw new BadRequestError("Invalid username/password");
     }
-
+    
+    // Remove password from user object before generating token
+    const { password: _, createdAt, ...safeUser } = user[0];
+    
     const payload = {
         data : {
-            userId : user[0].id
+            userId : safeUser.id,
+            user: safeUser
         },
         expiresIn : '1d'
     };
-    
-    // Remove password from user object before generating token
-    const { password: _, ...safeUser } = user[0];
     
     const token = jwtUtil.generateToken(payload);
 
