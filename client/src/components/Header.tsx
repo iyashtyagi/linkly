@@ -59,7 +59,7 @@ const Header = () => {
                     {isLoggedIn ? (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Avatar className="cursor-pointer">
+                                <Avatar className="cursor-pointer shadow-sm border">
                                     <AvatarImage alt={user?.username || user?.username || "User"} />
                                     <AvatarFallback>{getInitials()}</AvatarFallback>
                                 </Avatar>

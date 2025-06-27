@@ -4,7 +4,9 @@ import {
     addUrl,
     login,
     logout,
+    removeUrl,
     setLoading,
+    setUrls,
 } from "@/store/slice";
 import { backendUrl } from "@/utils";
 import type { User } from "@/types/linkly-type";
@@ -83,6 +85,33 @@ export const handleShortenUrl = (data: { url: string }) => {
             throw new Error(err.response?.data?.message || "Failed to shorten URL");
         } finally {
             dispatch(setLoading(false));
+        }
+    };
+};
+
+export const handleFetchUrls = () => {
+    return async (dispatch: AppDispatch) => {
+        dispatch(setLoading(true));
+        try {
+            const response = await api.get(`/url`);
+            dispatch(setUrls(response.data.data));
+        } catch (error) {
+            const err = error as AxiosError<ApiErrorResponse>;
+            throw new Error(err.response?.data?.message || "Failed to fetch URLs");
+        } finally {
+            dispatch(setLoading(false));
+        }
+    };
+};
+
+export const handleDeleteUrl = (urlId: string) => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            await api.delete(`/url/${urlId}`);
+            dispatch(removeUrl(urlId));
+        } catch (error) {
+            const err = error as AxiosError<ApiErrorResponse>;
+            throw new Error(err.response?.data?.message || "Failed to delete URL");
         }
     };
 };

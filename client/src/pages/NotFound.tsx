@@ -3,7 +3,7 @@ import { Link } from "react-router";
 const NotFound = () => {
     return (
         <>
-            <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+            <main className="grid min-h-[94vh] place-items-center bg-white py-24 sm:py-32 px-8 lg:px-28">
                 <div className="text-center">
                     <p className="text-base font-semibold text-indigo-600">404</p>
                     <h1 className="mt-4 text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl">

@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import AppLayout from "../layouts/AppLayout";
-import { Analytics, Dashboard, Landing, Login, SignUp } from "@/pages";
+import { Analytics, Dashboard, Landing, Login, NotFound, SignUp } from "@/pages";
 
 const router = createBrowserRouter([
     {
@@ -25,6 +25,10 @@ const router = createBrowserRouter([
             {
                 path: "/analytics/:urlId",
                 element: <Analytics />
+            },
+            {
+                path: "*",
+                element: <NotFound />
             }
         ]
     }
