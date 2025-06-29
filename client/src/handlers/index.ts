@@ -97,6 +97,9 @@ export const handleFetchUrls = () => {
             dispatch(setUrls(response.data.data));
         } catch (error) {
             const err = error as AxiosError<ApiErrorResponse>;
+            if (err.response?.status === 401) {
+                dispatch(logout());
+            }
             throw new Error(err.response?.data?.message || "Failed to fetch URLs");
         } finally {
             dispatch(setLoading(false));

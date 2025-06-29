@@ -14,7 +14,13 @@ const Dashboard = () => {
     const { urls, loading, error } = useSelector((state: RootState) => state.urls);
 
     useEffect(() => {
-        dispatch(handleFetchUrls());
+        (async () => {
+            try {
+                await dispatch(handleFetchUrls());
+            } catch (error) {
+                toast.error(error instanceof Error ? error.message : "Failed to fetch URLs")
+            }
+        })();
     }, [dispatch]);
 
     const filteredUrls = urls.filter((url: Url) =>
