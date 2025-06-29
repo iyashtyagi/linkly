@@ -7,8 +7,13 @@ export const getAnalytic = async (req : Request, res : Response, next : NextFunc
         const userId = req.userId;
         const { urlData } = await urlService.getUrlDetailsById(urlId, userId!);
         const clicksData = await analyticService.getAllClickAnalyticOfUrl(urlData.id);
+        
         res.status(200).json({
-            clicksData
+            urlMetadata: {
+                ...urlData,
+                totalClicks: clicksData.length,
+                clicksData
+            }
         });
     } catch (error) {
         next(error);
