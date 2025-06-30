@@ -56,7 +56,7 @@ export const getDeviceData = (req : Request) => {
     };  
 }
 
-export const saveClick = async (linkId : string, ipData : IpInfoData, deviceData : DeviceInfoData, timestamp : Date) => {
+export const saveClick = async (linkId : string, ipData : IpInfoData, deviceData : DeviceInfoData, timestamp : Date, clickType: string | null) => {
     await db.insert(clicksTable).values({
         linkId,
         ip : ipData.ip,
@@ -70,6 +70,7 @@ export const saveClick = async (linkId : string, ipData : IpInfoData, deviceData
         os : deviceData.os,
         device : deviceData.device,
         deviceVendor : deviceData.deviceVendor,
+        clickType: clickType,
         createdAt : timestamp
     });
 }

@@ -8,6 +8,8 @@ export const redirect = async (req : Request, res : Response, next : NextFunctio
     try {
         const timestamp = new Date();
         const slug = req.params.slug.toLowerCase();
+        const qr = req.query.qr;
+        const clickType = qr !== undefined ? "qr" : null;
         const { data } = await urlService.isValidSlug(slug);
         if(!data?.url){
             next(new NotFoundError("Link doesn't exist"));
@@ -18,7 +20,10 @@ export const redirect = async (req : Request, res : Response, next : NextFunctio
 
         const { ipData } = await trackingService.getIpData(req);
         const { deviceData } = trackingService.getDeviceData(req);
-        await saveClick(data.linkId, ipData, deviceData, timestamp);
+        if(deviceData.browser === undefined || deviceData.browser === null){
+            return;
+        }
+        await saveClick(data.linkId, ipData, deviceData, timestamp, clickType);
         return;
     } catch (error) {
         next(error);
