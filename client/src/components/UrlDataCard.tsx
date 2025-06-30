@@ -71,18 +71,22 @@ const UrlDataCard = ({ urlMetadata, loading, error }: UrlAnalytics) => {
             transition={{ duration: 0.5 }}
         >
             <Card>
-                <CardHeader className="flex flex-row items-baseline justify-between">
+                <CardHeader className="md:flex md:flex-row items-baseline justify-between">
                     <CardTitle className="text-xl font-medium">
-                        <div className="flex items-center gap-2">
-                            <Globe className="h-4 w-4 text-muted-foreground" />
-                            <span>Slug: <span className="bg-muted border py-1 px-2 rounded-lg hover:cursor-pointer" onClick={() => handleCopy(urlMetadata.slug)}>{`${window.location.origin}/${urlMetadata.slug}`}</span></span>
+                        <div className="flex items-baseline md:items-center gap-2">
+                            <Globe className="h-4 w-4 text-muted-foreground shrink-0" />
+                            <div className="break-all">
+                                <span>Slug: <span className="text-sm bg-muted border py-1 px-2 rounded-lg hover:cursor-pointer" onClick={() => handleCopy(urlMetadata.slug)}>{`${window.location.origin}/${urlMetadata.slug}`}</span></span>
+                            </div>
                         </div>
-                        <div className="flex items-center gap-2 mt-4">
-                            <Link className="h-4 w-4 text-muted-foreground" />
-                            <span className="">Original URL: <span className="bg-muted border py-1 px-2 rounded-lg">{urlMetadata.url}</span></span>
+                        <div className="flex items-baseline md:items-center gap-2 mt-4">
+                            <Link className="h-4 w-4 text-muted-foreground shrink-0" />
+                            <div className="break-all">
+                                <span>Original URL: <span className="text-sm bg-muted border py-1 px-2 rounded-lg">{urlMetadata.url}</span></span>
+                            </div>
                         </div>
                     </CardTitle>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center pl-4 gap-2">
                         <Button
                             variant="ghost"
                             size="icon"
@@ -116,7 +120,7 @@ const UrlDataCard = ({ urlMetadata, loading, error }: UrlAnalytics) => {
                     </div>
                 </CardHeader>
 
-                <CardContent className="grid w-full gap-2 sm:grid-cols-2 justify-center">
+                <CardContent className="grid w-full sm:gap-2 gap-6 sm:grid-cols-2 justify-center">
                     <Card className="gap-4 border p-4 rounded">
                         <CardTitle className="flex items-center gap-2" >
                             <QrCode />
