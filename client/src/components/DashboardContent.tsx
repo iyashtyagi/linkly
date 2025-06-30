@@ -7,17 +7,14 @@ const DashboardContent = ({
     filteredUrls,
     searchTerm,
     setSearchTerm,
-    handleCopy,
     setDeletingUrlId,
     deletingUrlId
 }: {
     filteredUrls: Url[];
     searchTerm: string;
     setSearchTerm: (term: string) => void;
-    handleCopy: (url: string) => void;
     setDeletingUrlId: (id: string | null) => void;
     deletingUrlId: string | null;
-    // loading: boolean;
 }) => (
     <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -41,7 +38,6 @@ const DashboardContent = ({
             <UrlCard
                 key={url.id}
                 url={url}
-                handleCopy={handleCopy}
                 setDeletingUrlId={setDeletingUrlId}
                 deletingUrlId={deletingUrlId}
             />

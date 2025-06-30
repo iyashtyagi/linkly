@@ -3,15 +3,14 @@ import { Button, Card, CardContent, CardHeader, CardTitle } from "./ui";
 import { Copy, ExternalLink, Globe, Link, Loader2, Trash2 } from "lucide-react";
 import type { Url } from "@/types/linkly-type";
 import { useNavigate } from "react-router";
+import { handleCopy } from "@/utils";
 
 const UrlCard = ({
     url,
-    handleCopy,
     setDeletingUrlId,
     deletingUrlId
 }: {
     url: Url;
-    handleCopy: (url: string) => void;
     setDeletingUrlId: (id: string | null) => void;
     deletingUrlId: string | null;
 }) => {

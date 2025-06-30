@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authReducer, urlsReducer } from "./slice";
+import { urlAnalyticsReducer, urlsReducer } from "./features";
+import { authReducer } from "./features/authSlice";
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
-        urls: urlsReducer
+        urls: urlsReducer,
+        urlAnalytics: urlAnalyticsReducer
     }
 });
 

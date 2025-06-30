@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import AppLayout from "../layouts/AppLayout";
 import { Analytics, Dashboard, Landing, Login, NotFound, SignUp } from "@/pages";
+import { ProtectedRoute } from "@/components";
 
 const router = createBrowserRouter([
     {
@@ -18,13 +19,18 @@ const router = createBrowserRouter([
                 path: "/signup",
                 element : <SignUp />
             },
-            { 
-                path: "/dashboard",
-                element : <Dashboard />
-            },
             {
-                path: "/analytics/:urlId",
-                element: <Analytics />
+                element: <ProtectedRoute />,
+                children : [
+                    { 
+                    path: "/dashboard",
+                    element : <Dashboard />
+                    },
+                    {
+                        path: "/analytics/:urlId",
+                        element: <Analytics />
+                    }
+                ]
             },
             {
                 path: "*",

@@ -27,15 +27,6 @@ const Dashboard = () => {
         [ url.url, url.slug].some((field) => field?.toLowerCase().includes(searchTerm.toLowerCase()))
     );
 
-    const handleCopy = async (slug: string) => {
-        try {
-            await navigator.clipboard.writeText(`${window.location.origin}/${slug}`);
-            toast.success("URL copied to clipboard!");
-        } catch (error) {
-            toast.error(error instanceof Error ? error.message : "Failed to copy URL");
-        }
-    };
-
     const handleDelete = async () => {
         if (deletingUrlId) {
             try {
@@ -60,13 +51,12 @@ const Dashboard = () => {
     }
 
     return (
-        <div className="min-h-[94vh] bg-muted max-w-[1300px]">
+        <div className="min-h-[94vh] bg-muted">
             <main className="container mx-auto px-8 lg:px-28 py-24">
                 <DashboardContent
                     filteredUrls={filteredUrls}
                     searchTerm={searchTerm}
                     setSearchTerm={setSearchTerm}
-                    handleCopy={handleCopy}
                     setDeletingUrlId={setDeletingUrlId}
                     deletingUrlId={deletingUrlId}
                 />

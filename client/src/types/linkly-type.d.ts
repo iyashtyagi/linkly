@@ -43,18 +43,24 @@ export interface UrlsState {
 }
 
 export interface faqsType {
-  question: string;
-  answer: string;
+    question: string;
+    answer: string;
 }
 
 export interface featureTypes {
-  icon: LucideIcon;
-  title: string;
-  description: string;
+    icon: LucideIcon;
+    title: string;
+    description: string;
 }
 
 export interface Testimonials {
-  text: string;
-  author: string;
-  role: string;
+    text: string;
+    author: string;
+    role: string;
+}
+
+export interface UrlAnalytics {
+    urlMetadata: Url;
+    loading: boolean;
+    error: string | null;
 }

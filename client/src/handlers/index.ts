@@ -7,9 +7,12 @@ import {
     removeUrl,
     setLoading,
     setUrls,
-} from "@/store/slice";
+    setAnalyticsLoading,
+    setAnalyticsError,
+    setAnalyticsData
+} from "@/store/features";
 import { backendUrl } from "@/utils";
-import type { User } from "@/types/linkly-type";
+import type { UrlAnalytics, User } from "@/types/linkly-type";
 import { toast } from "sonner";
 
 interface ApiErrorResponse {
@@ -115,6 +118,29 @@ export const handleDeleteUrl = (urlId: string) => {
         } catch (error) {
             const err = error as AxiosError<ApiErrorResponse>;
             throw new Error(err.response?.data?.message || "Failed to delete URL");
+        }
+    };
+};
+
+export const handleFetchUrlDetails = (urlId: string) => {
+    return async (dispatch: AppDispatch) => {
+        dispatch(setAnalyticsLoading(true));
+
+        try {
+            const response = await api.get<UrlAnalytics>(`/analytics/${urlId}`);
+            const { urlMetadata } = response.data;
+
+            dispatch(setAnalyticsData(urlMetadata));
+        } catch (error) {
+            const err = error as AxiosError<ApiErrorResponse>;
+            if (err.response?.status === 401) {
+                dispatch(logout());
+                return;
+            }
+            const errorMessage = err.response?.data?.message || "Failed to fetch URL details";
+            dispatch(setAnalyticsError(errorMessage));
+        } finally {
+        dispatch(setAnalyticsLoading(false));
         }
     };
 };
