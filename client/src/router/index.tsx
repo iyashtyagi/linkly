@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import AppLayout from "../layouts/AppLayout";
 import { Analytics, Dashboard, Landing, Login, NotFound, SignUp } from "@/pages";
 import { ProtectedRoute } from "@/components";
@@ -25,6 +25,10 @@ const router = createBrowserRouter([
                     { 
                     path: "/dashboard",
                     element : <Dashboard />
+                    },
+                    {
+                        path: "/analytics/",
+                        element: <Navigate to="/dashboard" replace />
                     },
                     {
                         path: "/analytics/:urlId",

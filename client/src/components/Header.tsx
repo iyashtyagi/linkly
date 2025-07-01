@@ -70,16 +70,6 @@ const Header = () => {
                                         Dashboard
                                     </Link>
                                 </DropdownMenuItem>
-                                <DropdownMenuItem asChild>
-                                    <Link to="/contact" className="w-full cursor-pointer">
-                                        Contact
-                                    </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem asChild>
-                                    <Link to="/report" className="w-full cursor-pointer">
-                                        Report
-                                    </Link>
-                                </DropdownMenuItem>
                                 <DropdownMenuItem onClick={handleLogoutFnc} className="cursor-pointer">
                                     Logout
                                 </DropdownMenuItem>

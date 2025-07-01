@@ -16,10 +16,7 @@ const DashboardSkeleton = () => (
     className="space-y-8 min-h-[94vh] px-8 lg:px-28 pt-24"
   >
     <div className="space-y-4 animate-pulse">
-      <div className="flex justify-between items-center">
-        <div className="h-8 w-40 bg-zinc-300 rounded" />
-        <div className="h-9 w-48 bg-zinc-300 rounded" />
-      </div>
+      <div className="h-8 w-40 bg-zinc-300 rounded" />
     </div>
     {[...Array(3)].map((_, i) => (
       <SkeletonCard key={i} />
