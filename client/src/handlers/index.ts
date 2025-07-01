@@ -12,7 +12,7 @@ import {
     setAnalyticsData
 } from "@/store/features";
 import { backendUrl } from "@/utils";
-import type { UrlAnalytics, User } from "@/types/linkly-type";
+import type { User } from "@/types/linkly-type";
 import { toast } from "sonner";
 
 interface ApiErrorResponse {
@@ -127,10 +127,10 @@ export const handleFetchUrlDetails = (urlId: string) => {
         dispatch(setAnalyticsLoading(true));
 
         try {
-            const response = await api.get<UrlAnalytics>(`/analytics/${urlId}`);
-            const { urlMetadata } = response.data;
+            const response = await api.get(`/analytics/${urlId}`);
+            const { urlMetadata, lastClickDetails, analytics } = response.data.data;
 
-            dispatch(setAnalyticsData(urlMetadata));
+            dispatch(setAnalyticsData({urlMetadata, lastClickDetails, analytics}));
         } catch (error) {
             const err = error as AxiosError<ApiErrorResponse>;
             if (err.response?.status === 401) {

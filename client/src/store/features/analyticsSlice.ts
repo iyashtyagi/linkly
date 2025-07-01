@@ -1,14 +1,24 @@
-import type { UrlAnalytics } from "@/types/linkly-type";
+import type { AnalyticsState } from "@/types/linkly-type";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-const initialAnalyticsState: UrlAnalytics = {
+const initialAnalyticsState: AnalyticsState = {
     urlMetadata: {
         id: "",
+        userId: "",
         url: "",
         slug: "",
         totalClicks: 0,
-        clicksData: [],
         createdAt: ""
+    },
+    lastClickDetails: [],
+    analytics: {
+        byCountry: [],
+        byState: [],
+        byCity: [],
+        byDevice: [],
+        byBrowser: [],
+        byOS: [],
+        byClickType: []
     },
     loading: false,
     error: null
@@ -25,7 +35,10 @@ const urlAnalyticsSlice = createSlice({
             state.error = action.payload;
         },
         setAnalyticsData: (state, action: PayloadAction<any>) => {
-            state.urlMetadata = action.payload;
+            state.urlMetadata = action.payload.urlMetadata || initialAnalyticsState.urlMetadata;
+            state.lastClickDetails = action.payload.lastClickDetails || initialAnalyticsState.lastClickDetails;
+            console.log("Analytics Data: in root", action.payload.analytics);
+            state.analytics = action.payload.analytics || initialAnalyticsState.analytics;
         }
     }
 });

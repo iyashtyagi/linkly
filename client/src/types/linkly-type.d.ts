@@ -1,3 +1,5 @@
+import type { LucideIcon } from "lucide-react";
+
 export interface User {
     id: string;
     username: string;
@@ -11,29 +13,12 @@ export interface AuthState {
     token: string | null;
 }
 
-export interface ClickData {
-    id: string;
-    linkId: string;
-    ip: string;
-    country: string;
-    state: string;
-    city: string;
-    device: string;
-    deviceVendor: string;
-    os: string;
-    browser: string;
-    referrer: string | null;
-    clickType: string | null;
-    createdAt: string;
-}
-
 export interface Url {
     id: string;
     url: string;
     slug: string;
     createdAt: string;
     totalClicks: number;
-    clicksData: ClickData[]
 }
 
 export interface UrlsState {
@@ -59,8 +44,30 @@ export interface Testimonials {
     role: string;
 }
 
-export interface UrlAnalytics {
-    urlMetadata: Url;
+export interface LabelCount {
+    label: string;
+    count: number;
+}
+
+export interface AnalyticsData {
+    byCountry: LabelCount[];
+    byState: LabelCount[];
+    byCity: LabelCount[];
+    byDevice: LabelCount[];
+    byBrowser: LabelCount[];
+    byOS: LabelCount[];
+    byClickType: LabelCount[];
+}
+
+export interface UrlMetadata extends Url {
+    userId: string;
+    totalClicks: number;
+}
+
+export interface AnalyticsState {
+    urlMetadata: UrlMetadata;
+    lastClickDetails: ClickData[];
+    analytics: AnalyticsData;
     loading: boolean;
     error: string | null;
 }
