@@ -77,6 +77,24 @@ export const handleLogout = () => {
     };
 };
 
+export const handleVerifyUser = () => {
+    return async (dispatch: AppDispatch) => {
+        dispatch(setLoading(true));
+        try {
+            const response = await api.get("/auth/verify");
+            if(response.status !== 200){
+                throw new Error();
+            }
+        } catch (err) {
+            const error = err as AxiosError<ApiErrorResponse>;
+            dispatch(logout());
+            toast.error(error.response?.data.message || "Please login again");
+        } finally {
+            dispatch(setLoading(false));
+        }
+    }
+}
+
 export const handleShortenUrl = (data: { url: string }) => {
     return async (dispatch: AppDispatch) => {
         dispatch(setLoading(true));
