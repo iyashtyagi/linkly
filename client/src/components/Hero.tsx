@@ -31,11 +31,9 @@ const Hero = () => {
 
         try {
             setIsLoading(true);
-            await dispatch(
-                handleShortenUrl({ url })
-            );
+            const slugId = await dispatch(handleShortenUrl({ url }));
             toast.success("URL shortened successfully!");
-            navigate("/dashboard");
+            navigate(`/analytics/${slugId}`);
         } catch (error) {
             const errorMessage = error instanceof Error? error.message : "Something went wrong. Please try again.";
             toast.error(errorMessage);

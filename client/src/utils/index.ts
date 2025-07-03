@@ -9,7 +9,6 @@ export function getDecodedUser(token: string | null): User | null {
         const {user} = jwtDecode(token) as {user: User};
         return user;
     } catch (err) {
-        console.error("Invalid token", err);
         return null;
     }
 };

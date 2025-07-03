@@ -9,7 +9,6 @@ import type { AppDispatch } from "./store/store";
 function App() {
     const dispatch = useDispatch<AppDispatch>();
     useEffect(()=>{
-        console.log(`mount`);
         dispatch(handleVerifyUser());
     }, []);
     return (

@@ -37,7 +37,6 @@ const urlAnalyticsSlice = createSlice({
         setAnalyticsData: (state, action: PayloadAction<any>) => {
             state.urlMetadata = action.payload.urlMetadata || initialAnalyticsState.urlMetadata;
             state.lastClickDetails = action.payload.lastClickDetails || initialAnalyticsState.lastClickDetails;
-            console.log("Analytics Data: in root", action.payload.analytics);
             state.analytics = action.payload.analytics || initialAnalyticsState.analytics;
         }
     }

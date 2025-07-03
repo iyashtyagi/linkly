@@ -101,6 +101,7 @@ export const handleShortenUrl = (data: { url: string }) => {
         try {
             const response = await api.post(`/url/create`, data);
             dispatch(addUrl(response.data.data));
+            return response.data.data[0]?.id;
         } catch (error) {
             const err = error as AxiosError<ApiErrorResponse>;
             throw new Error(err.response?.data?.message || "Failed to shorten URL");
