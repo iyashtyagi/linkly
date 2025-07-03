@@ -32,3 +32,10 @@ export const handleSignup = async (req : Request, res : Response, next : NextFun
         next(error);
     }
 };
+
+export const verifyToken = async (req: Request, res: Response) => {
+    res.status(200).json({
+        success : true,
+        message : "Verified user"
+    });
+}
