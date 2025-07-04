@@ -19,6 +19,19 @@ const AnalyticsSkeleton = () => (
                     </div>
                 </CardContent>
             </Card>
+
+            <Card className="mt-8">
+                <CardHeader className=" border-b-2 border-dotted">
+                    <CardTitle className="flex items-center gap-2">
+                        <div className="shrink-0 h-8 w-8 bg-muted rounded" />
+                        <div className="h-8 w-40 bg-muted rounded block" />
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="w-full h-[300px] md:h-[500px] bg-muted rounded" />
+                </CardContent>
+            </Card>
+
             <Card className="mt-8">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">

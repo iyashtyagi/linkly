@@ -1,0 +1,1 @@
+ALTER TABLE "usersTable" ADD COLUMN "time_zone" varchar(100) DEFAULT 'UTC' NOT NULL;

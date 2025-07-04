@@ -5,11 +5,12 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import { handleFetchUrlDetails } from "@/handlers";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui";
-import { ChartColumn } from "lucide-react";
+import { ChartColumn, PieChart } from "lucide-react";
 import PieChartComponent from "@/components/PieChartComponent";
 import { motion } from "framer-motion";
 import SomethingWentWrong from "@/components/SomethingWentWrong";
 import AnalyticsSkeleton from "@/components/AnalyticsSkeleton";
+import LineChartComponent from "@/components/LineChartComponent";
 
 const Analytics = () => {
     const { urlMetadata, lastClickDetails, analytics, loading, error } = useSelector((state: RootState) => state.urlAnalytics);
@@ -57,10 +58,35 @@ const Analytics = () => {
                 <UrlDataCard urlMetadata={urlMetadata} lastClickDetails={lastClickDetails} analytics={analytics} loading={loading} />
 
                 <Card className="mt-8">
-                    <CardHeader>
+                    <CardHeader className=" border-b-2 border-dotted">
                         <CardTitle className="flex items-center gap-2">
                             <ChartColumn className=" shrink-0" />
-                            <span className="pt-1 text-xl lg:text-4xl">Click Analytics</span>
+                            <span className="pt-1 text-xl lg:text-4xl">Clicks Over Time</span>
+                        </CardTitle>
+                    </CardHeader>
+                    
+                    <CardContent>
+                        <motion.div
+                            initial={{opacity: 0, y:20}}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5 }}
+                            className= "w-full h-[300px] md:h-[500px]"
+                            style={{
+                                marginLeft: window.innerWidth < 768 ? "-2rem" : "0px",
+                                width: window.innerWidth < 768 ? "calc(100% + 2rem)" : "100%",
+                            }}    
+                        >
+                            <LineChartComponent dataset={analytics.byDateUserTimeZone}/>
+                        </motion.div>   
+                    </CardContent>
+                    
+                </Card>
+
+                <Card className="mt-8">
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <PieChart className=" shrink-0" />
+                            <span className="pt-1 text-xl lg:text-4xl">Click Breakdown</span>
                         </CardTitle>
                     </CardHeader>
 

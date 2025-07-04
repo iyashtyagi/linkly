@@ -8,6 +8,7 @@ export const usersTable = pgTable('usersTable', {
     firstName: varchar('first_name', { length: 30 }).notNull(),
     lastName: varchar('last_name', { length: 30 }).notNull(),
     password: varchar('password', { length: 100 }).notNull(),
+    timeZone: varchar('time_zone', { length: 100 }).notNull().default("UTC"),
     createdAt: timestamp('created_at', { mode: 'date' }).defaultNow().notNull()
 });
 

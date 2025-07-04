@@ -49,6 +49,11 @@ export interface LabelCount {
     count: number;
 }
 
+export interface DateClickCount {
+    date: string;
+    count: number;
+}
+
 export interface AnalyticsData {
     byCountry: LabelCount[];
     byState: LabelCount[];
@@ -57,6 +62,7 @@ export interface AnalyticsData {
     byBrowser: LabelCount[];
     byOS: LabelCount[];
     byClickType: LabelCount[];
+    byDateUserTimeZone: DateClickCount[];
 }
 
 export interface UrlMetadata extends Url {

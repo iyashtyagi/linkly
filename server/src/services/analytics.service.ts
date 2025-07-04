@@ -1,6 +1,6 @@
 import { count, desc, eq, sql } from "drizzle-orm"
 import { db } from "../config/db"
-import { clicksTable } from "../models/schema"
+import { clicksTable, usersTable } from "../models/schema"
 import { ClickAnalyticsField } from "../types";
 
 export const getAllClickAnalyticOfUrl = async (linkId: string, limit?: number, offset: number = 0) => {
@@ -59,4 +59,37 @@ export const getLastClickDetails = async (linkId: string) => {
         .limit(1);
 
     return data;
+}
+
+export const getClicksGroupByTimeZone = async (
+    linkId: string, 
+    userTimeZone: string, 
+    startDate: string, 
+    endDate: string
+) => {
+    const data = await db.execute(sql`
+        WITH calendar AS (
+            SELECT generate_series(
+                ${startDate}::date,
+                ${endDate}::date,
+                INTERVAL '1 day'
+            )::date AS dt
+        ), 
+        clicks AS (
+            SELECT  
+                DATE(${clicksTable.createdAt} AT TIME ZONE 'UTC' AT TIME ZONE ${userTimeZone}) AS dt,
+                COUNT(*) AS count
+            FROM ${clicksTable}
+            WHERE ${clicksTable.linkId} = ${linkId}
+            GROUP BY dt
+        )
+        SELECT 
+            calendar.dt AS date,
+            COALESCE(clicks.count, 0)::int AS count
+        FROM calendar
+        LEFT JOIN clicks ON clicks.dt = calendar.dt
+        ORDER BY calendar.dt
+    `);
+
+    return data.rows;
 }

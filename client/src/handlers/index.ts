@@ -144,6 +144,7 @@ export const handleDeleteUrl = (urlId: string) => {
 export const handleFetchUrlDetails = (urlId: string) => {
     return async (dispatch: AppDispatch) => {
         dispatch(setAnalyticsLoading(true));
+        console.log("here");
 
         try {
             const response = await api.get(`/analytics/${urlId}`);

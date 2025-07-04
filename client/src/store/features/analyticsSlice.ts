@@ -18,7 +18,8 @@ const initialAnalyticsState: AnalyticsState = {
         byDevice: [],
         byBrowser: [],
         byOS: [],
-        byClickType: []
+        byClickType: [],
+        byDateUserTimeZone: []
     },
     loading: false,
     error: null
