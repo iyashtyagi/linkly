@@ -60,3 +60,5 @@ export const getLastClickDetails = async (linkId: string) => {
 
     return data;
 }
+
+export const getClicksGroupByTime = async (linkId: string, time:)

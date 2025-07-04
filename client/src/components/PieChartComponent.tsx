@@ -27,7 +27,7 @@ const PieChartComponent = ({ data, title, idx }: { data: LabelCount[], title: st
                 <PieChart className="shrink-0"/>
                 <h2 className="text-md font-semibold mb-4">{title}</h2>
             </div>
-            <div className="aspect-square min-w-3xs max-w-lg">
+            {!data.length ? (<div className="w-full mx-auto flex justify-center items-center min-h-60 ">No clicks yet</div>) : (<div className="aspect-square min-w-3xs max-w-lg">
                 <ResponsivePie
                     data={formattedData}
                     innerRadius={0}
@@ -55,7 +55,7 @@ const PieChartComponent = ({ data, title, idx }: { data: LabelCount[], title: st
                         symbolSize: 12,
                     }]}
                 />
-            </div>
+            </div>)}
                 
         </motion.div>
     );
